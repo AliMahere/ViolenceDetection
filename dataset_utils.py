@@ -13,8 +13,9 @@ def merge_dataset(dataset_path, output_path , name = 'dataset'):
             data_set = np.vstack((data_set, data_sample))
         else:
             continue
-    np.save(output_path + '/' "dataset.npy", data_set)
-merge_dataset('output/nv/','dataset')
+    np.save(output_path + '/' +name+".npy", data_set)
+
+merge_dataset('output/nv/','dataset', name = "x_positive")
 # def get_sequence(x_path_positive,x_path_negative):
 #
 #     return X,y
