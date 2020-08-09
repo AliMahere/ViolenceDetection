@@ -15,9 +15,7 @@ def merge_dataset(dataset_path, output_path , name = 'dataset'):
             continue
     np.save(output_path + '/' +name+".npy", data_set)
 
-#merge_dataset('output/v/','dataset', name = "x_negative")
-
-def get_sequence(x_path_positive,x_path_negative):
+def get_sequenc(x_path_positive, x_path_negative):
     x_positive = np.load(x_path_positive)
     x_negative = np.load(x_path_negative)
     y_positive = np.ones((x_positive.shape[0]))
@@ -25,4 +23,5 @@ def get_sequence(x_path_positive,x_path_negative):
     X = np.vstack((x_negative,x_positive))
     y = np.hstack((y_negative,y_positive))
     return X,y
-X ,y= get_sequence('dataset/x_positive.npy','dataset/x_negative.npy')
+
+
