@@ -2,6 +2,8 @@ import cv2
 import numpy as np
 import tensorflow as tf
 from os import path
+import os
+
 sample_rate = 5
 
 protoFile = "pose/coco/pose_deploy_linevec.prototxt"
@@ -34,7 +36,7 @@ def get_ferture_units(video_path,output_path):
     sample = time_step
 
 
-    sample_no = 0  # frame number
+    sample_no = 0
     while success :
 
         inpBlob = cv2.dnn.blobFromImage(img, 1.0 / 255, (inWidth, inHeight),
@@ -51,7 +53,7 @@ def get_ferture_units(video_path,output_path):
 
         if sample.shape[0] % sample_rate == 0:
 
-            np.save(output_path+'/'+base_file_name+'-'+ str(sample_no)+ ".npy" , sample)
+            np.save(output_path+'/'+base_file_name+'-'+ str(sample_no)+ ".npy" , np.array([sample]))
 
             sample_no +=1
             success, img = cap.read()
@@ -71,4 +73,29 @@ def get_ferture_units(video_path,output_path):
         # read next frame
         success, img = cap.read()
 
-get_ferture_units("HockeyFights/Violence/fi1_xvid.avi", "out")
+
+
+def merge_dataset(dataset_path, output_path ):
+    data_set = None
+    for npy_file in os.listdir(dataset_path):
+        if npy_file.endswith(".npy")  and data_set != None:
+            data_sample = np.load(npy_file)
+            data_set = np.vstack(data_set, data_sample)
+        elif npy_file.endswith(".npy") and data_set == None:
+            data_sample = np.load(npy_file)
+            data_set = data_sample
+        else:
+            continue
+    np.save(output_path + '/' "dataset.npy", data_set)
+
+
+#Loop though vedios
+videos_path = "HockeyFights/Non-Violence/"
+for video in os.listdir(videos_path):
+    if video.endswith(".avi") :
+        get_ferture_units(videos_path+video, "output/nv")
+        print(video)
+
+    else:
+        continue
+

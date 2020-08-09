@@ -2,3 +2,4 @@ output
 *.caffemodel
 HockeyFights
 *.avi
+*.npy
