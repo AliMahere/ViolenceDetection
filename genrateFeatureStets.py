@@ -90,10 +90,23 @@ def merge_dataset(dataset_path, output_path ):
 
 
 #Loop though vedios
-videos_path = "HockeyFights/Non-Violence/"
+#videos_path = "HockeyFights/nv/"
+#for video in os.listdir(videos_path):
+#    if video.endswith(".avi") :
+#        get_ferture_units(videos_path+video, "output/nv")
+#        print(video)#
+#
+#   else:
+#       continue
+
+#Loop though vedios
+videos_path = "HockeyFights/v/"
 for video in os.listdir(videos_path):
     if video.endswith(".avi") :
-        get_ferture_units(videos_path+video, "output/nv")
+        try:
+           get_ferture_units(videos_path+video, "output/v")
+        finally:
+            continue
         print(video)
 
     else:
