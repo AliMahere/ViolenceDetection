@@ -75,7 +75,7 @@ def get_ferture_units(video_path,output_path):
 
 
 
-def merge_dataset(dataset_path, output_path ):
+def merge_dataset(dataset_path, output_path, name = 'dataset' ):
     data_set = None
     for npy_file in os.listdir(dataset_path):
         if npy_file.endswith(".npy")  and data_set != None:
@@ -86,7 +86,9 @@ def merge_dataset(dataset_path, output_path ):
             data_set = data_sample
         else:
             continue
-    np.save(output_path + '/' "dataset.npy", data_set)
+    np.save(output_path + '/'+ name+ ".npy", data_set)
+
+
 
 
 #Loop though vedios
