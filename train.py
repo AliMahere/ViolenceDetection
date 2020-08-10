@@ -11,7 +11,7 @@ model.add(Bidirectional(LSTM(20, return_sequences=True),input_shape=(5, 5336)))
 model.add(TimeDistributed(Dense(1, activation='sigmoid')))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 history = model.fit(X_train, y_train, validation_split=0.10, epochs=1000, batch_size=64, verbose=0)
-# list all data in history
+# list all data in history0
 print(history.history.keys())
 # summarize history for accuracy
 plt.plot(history.history['accuracy'])
