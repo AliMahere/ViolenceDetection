@@ -19,13 +19,10 @@ print("X_test shape ",X_test.shape)
 
 model = Sequential()
 model.add(Bidirectional(LSTM(64, return_sequences=True),input_shape=(5, 5336)))
-model.add(Bidirectional(LSTM(32)))
 model.add(TimeDistributed(Dense(1, activation='sigmoid')))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 history = model.fit(X_train, y_train, validation_split=validation_split, epochs=1000, batch_size=batch_size, verbose=0)
-# list all data in history0
 print(history.history.keys())
-# summarize history for accuracy
 plt.plot(history.history['accuracy'])
 plt.plot(history.history['val_accuracy'])
 plt.title('model accuracy')
@@ -33,7 +30,6 @@ plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
-# summarize history for loss
 plt.plot(history.history['loss'])
 plt.plot(history.history['val_loss'])
 plt.title('model loss')

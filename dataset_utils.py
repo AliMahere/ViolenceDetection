@@ -22,3 +22,6 @@ def get_sequence(x_path_positive, x_path_negative):
     X = np.vstack((x_negative,x_positive))
     y = np.hstack((y_negative,y_positive))
     return X,y
+
+merge_dataset('output/nv/', 'dataset/' , name = 'x_positive')
+merge_dataset('output/v/', 'dataset/' , name = 'x_negative')

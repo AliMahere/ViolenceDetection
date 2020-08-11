@@ -1,39 +1,29 @@
 import cv2
 import numpy as np
 import tensorflow as tf
-# protoFile = "pose/coco/pose_deploy_linevec.prototxt"
-# weightsFile = "pose/coco/pose_iter_440000.caffemodel"
-# image = cv2.imread("a.png")
-# net = cv2.dnn.readNetFromCaffe(protoFile, weightsFile)
-# width = image.shape[1]
-# height = image.shape[0]
-# inHeight = 368
-# inWidth = int((inHeight / height) * width)
-#
-# inpBlob = cv2.dnn.blobFromImage(image, 1.0 / 255, (inWidth, inHeight),
-#                                 (0, 0, 0), swapRB=False, crop=False)
-# net.setInput(inpBlob)
-# output = net.forward()
-# print(output.shape)
-#
-# points = output[:,0:19,:,:]
-# points = tf.reduce_sum(points, 1)
-# print("points ", points.shape)
-# connections = output[:,20:,:,:]
-# connections = tf.reduce_sum(connections, 1)
-# #ft = tf.reshape([connections,points] , [-1])
-# ft = np.vstack((points,connections))
-# ft = np.reshape(ft,[-1])
-# print("connections ", connections.shape)
-# print("ft shape ",ft.shape)
-# print("ft type ", type(ft))
+from keras import Sequential
+from keras.layers import LSTM, TimeDistributed, Dense, Bidirectional
+from dataset_utils import get_sequence
+from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
+from datetime import datetime
+from keras import Sequential
+from keras.layers import LSTM, TimeDistributed, Dense, Bidirectional
+from dataset_utils import get_sequence
+from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
+from datetime import datetime
+from sklearn import metrics
+from keras.utils import plot_model
+from keras.models import load_model
+model = load_model('HockyFight-11 أغسطس, 2020.h5')
+model.summary()
 
-npy1 = np.load("output/fi1_xvid.avi-0.npy")
-print("npy1.shape",npy1.shape)
-npy2 = np.load("output/fi1_xvid.avi-1.npy")
-
-print("npy2.shape",npy2.shape)
-merged = npy1
-merged = np.vstack((merged,npy2))
-print("merged.shape",merged.shape)
-
+test_size = 0.10
+X,y = get_sequence('dataset/x_positive.npy','dataset/x_negative.npy')
+X_train, X_test, y_train, y_test = train_test_split( X, y, test_size=test_size, random_state=40)
+y_pred = model.predict(X_test)
+print("y_pred shape",y_pred.shape)
+print("y shape",y.shape)
+matrix = metrics.confusion_matrix(y_test, y_pred)
+print(matrix)
